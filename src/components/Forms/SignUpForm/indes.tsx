@@ -14,13 +14,13 @@ export const SignUpForm = () => (
                         <div className="label">
                             Nome *    
                         </div>
-                        <input type="text" name="nome" placeholder="Ex.: Silvio" />
+                        <input type="text" name="nome" maxLength={30} placeholder="Ex.: Silvio" />
                     </label>
                     <label>
                         <div className="label">
                             Sobrenome *
                         </div>
-                        <input type="text" name="sobrenome" placeholder="Ex.: Santos"/>
+                        <input type="text" name="sobrenome" maxLength={30} placeholder="Ex.: Santos"/>
                     </label>
                 </div>
 
@@ -36,11 +36,11 @@ export const SignUpForm = () => (
                         <div className="label">
                             CPF *
                         </div>
-                        <input type="text" name="cpf" placeholder="Ex.: 12345678910"/>
+                        <input type="number" name="cpf" maxLength={11} placeholder="Ex.: 12345678910"/>
                     </label>
                     <label>
                         <div className="label">
-                            Data de nasc.
+                            Data de nasc. *
                         </div>
                         <input type="text" name="dataNasc" placeholder="Ex.: 04/05/1995"/>
                     </label>
