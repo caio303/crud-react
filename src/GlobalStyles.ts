@@ -27,4 +27,11 @@ export const GlobalStyles = createGlobalStyle`
         min-height: 100vh;
         background-color: var(--dark-blue);
     }
+
+    a {
+        text-decoration: none;
+        &:visited {
+            color: inherit;
+        }
+    }
 `
