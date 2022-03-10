@@ -1,6 +1,51 @@
 import { Container } from "../styles";
+import { SignUpFieldsType } from "../../../types/SignUpFieldsType";
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup'
+import { SubmitHandler, useForm} from 'react-hook-form'
+import { SignUpValidationType } from "../../../types/SignUpValidationType";
+import { dataNascRegExp } from "../../../utils/regexps/dataNascRegExp";
+import { useState } from "react";
+
+const createUserFormSchema = yup.object().shape({
+    nome: yup.string().required("Preencha o nome").max(30),
+    sobrenome: yup.string().max(30),
+    cpf: yup.string().required("Preencha o CPF").length(11),
+    email: yup.string().email("Insira um email válido").required("Preencha o email").max(60),
+    dataNasc: yup.string().required("Preencha a data").length(10,"Preencha neste formato: DD/MM/AAAA"),
+    senha: yup.string().required("Preencha a senha").min(8,"A senha precisa ter no mínimo 8 caracteres")
+})
 
 export const SignUpForm = () => {
+
+    const [userCreated,setUserCreated] = useState<boolean>(false);
+
+    const { 
+        register, 
+        handleSubmit, 
+        formState: {errors} 
+    } = useForm<SignUpValidationType>({
+        resolver: yupResolver(createUserFormSchema)
+    })
+
+    const handleSignUpUser: SubmitHandler<SignUpValidationType> = async (values) => {
+        if(!values.dataNasc.match(dataNascRegExp)) return
+
+        const nome = values.sobrenome? values.nome + " " + values.sobrenome : values.nome;
+        const descricao = values.descricao?? "";
+
+        const newUser: SignUpFieldsType = {
+            nome: nome,
+            cpf: values.cpf,
+            email: values.email,
+            descricao: descricao,
+            dataNasc: values.dataNasc,
+            senha: values.senha,
+        }
+
+        
+
+    }
 
     return (
         <Container>
@@ -10,20 +55,36 @@ export const SignUpForm = () => {
                     <p>Registre-se em nossa plataforma de graça!</p>
                 </div>
 
-                <form>
-                    
+                <form onSubmit={handleSubmit(handleSignUpUser)}>
+
                     <div className="input-wrapper">
                         <label>
                             <div className="label">
                                 Nome *    
                             </div>
-                            <input type="text" name="nome" maxLength={30} placeholder="Ex.: Silvio" />
+                            <input 
+                                type="text"
+                                // @ts-ignore
+                                name="nome" 
+                                {...register('nome')}
+                                maxLength={30} 
+                                placeholder="Ex.: Silvio"
+                                />
+                            {errors.nome && <span>{errors.nome.message}</span>}
                         </label>
                         <label>
                             <div className="label">
-                                Sobrenome *
+                                Sobrenome
                             </div>
-                            <input type="text" name="sobrenome" maxLength={30} placeholder="Ex.: Santos"/>
+                            <input 
+                                type="text" 
+                                // @ts-ignore
+                                name="sobrenome"
+                                {...register('sobrenome')}
+                                maxLength={30} 
+                                placeholder="Ex.: Santos"
+                                />
+                            {errors.sobrenome && <span>{errors.sobrenome.message}</span>}
                         </label>
                     </div>
 
@@ -31,7 +92,15 @@ export const SignUpForm = () => {
                         <div className="label">
                             Email *
                         </div>
-                        <input type="email" name="email" placeholder="Ex.: silviosantos@sbt.com"/>
+                        <input 
+                            type="email"
+                            // @ts-ignore
+                            name="email"
+                            {...register('email')}
+                            maxLength={60} 
+                            placeholder="Ex.: silviosantos@sbt.com"
+                            />
+                        {errors.email && <span>{errors.email.message}</span>}
                     </label>
                 
                     <div className="input-wrapper">
@@ -39,13 +108,29 @@ export const SignUpForm = () => {
                             <div className="label">
                                 CPF *
                             </div>
-                            <input type="tel" name="cpf" maxLength={11} placeholder="Ex.: 12345678910"/>
+                            <input 
+                                type="tel"
+                                // @ts-ignore 
+                                name="cpf"
+                                {...register('cpf')}
+                                maxLength={11}
+                                placeholder="Ex.: 12345678910"
+                                />
+                            {errors.cpf && <span>{errors.cpf.message}</span>}
                         </label>
                         <label>
                             <div className="label">
                                 Data de nasc. *
                             </div>
-                            <input type="text" name="dataNasc" placeholder="Ex.: 04/05/1995"/>
+                            <input 
+                                type="text" 
+                                // @ts-ignore
+                                name="dataNasc"
+                                {...register('dataNasc')}
+                                maxLength={10}
+                                placeholder="Ex.: 04/05/1995"
+                                />
+                            {errors.dataNasc && <span>{errors.dataNasc.message}</span>}
                         </label>
                     </div>
 
@@ -53,13 +138,31 @@ export const SignUpForm = () => {
                         <div className="label">
                             Senha *
                         </div>
-                        <input type="password" name="senha" placeholder="Ex.: S3nh4f0rte@_3306"/>
+                        <input 
+                            type="password" 
+                            // @ts-ignore
+                            name="senha"
+                            {...register('senha')}
+                            placeholder="Ex.: S3nh4f0rte@_3306"
+                            />
+                        {errors.senha && <span>{errors.senha.message}</span>}
+                    </label>
+
+                    <label>
+                        <div className="label">
+                            Descrição    
+                        </div>
+                        <textarea 
+                            placeholder="Ex.: Sou desenvolvedor web!"
+                            {...register('descricao')}
+                            />
                     </label>
 
                     <button type="submit">Enviar</button>
 
                 </form>
             </section>
+            {userCreated && <div>USUARUO CRIADO</div>}
         </Container>
     )
 } 

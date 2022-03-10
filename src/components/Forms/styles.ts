@@ -69,7 +69,7 @@ export const Container = styled.main`
         width: 100%;
         padding: .6rem;
         border-radius: .3rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1.8rem;
 
         &::placeholder {
             color: var(--form-cyan);
@@ -116,9 +116,41 @@ export const Container = styled.main`
     }
 
     label {
+        position: relative;
+
         .label { 
             margin: 0 0 .2rem .42rem;
-            cursor: pointer;
+        }
+
+        textarea {
+            resize: none;
+            width: 100%;
+            height: 6rem;
+            background-color: var(--dark-blue-lighter);
+            border: none;
+            outline: none;
+            border-radius: .3rem;
+            padding: .6rem;
+            margin-bottom: 1.8rem;
+
+            &:hover {
+                filter: brightness(110%);
+            }
+
+            &::placeholder {
+                color: var(--form-cyan);
+                font-weight: 300;
+                font-size: .95rem;
+            }
+        }
+
+        span {
+            position: absolute;
+            font-size: .8rem;
+            color: var(--light-cyan);
+            width: 100%;
+            top: 3.8rem;
+            left: .4rem;
         }
     }
 `
