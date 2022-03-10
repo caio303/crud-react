@@ -1,3 +1,5 @@
+import { SignInForm } from "../components/Forms/SignInForm";
+
 export const SignInPage = () => (
-    <main>SignIn Page</main>
+    <SignInForm />
 )

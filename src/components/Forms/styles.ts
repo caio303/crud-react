@@ -18,11 +18,12 @@ export const Container = styled.main`
         width: 90%;
         padding: 1rem;
         #form-header {
+            margin-bottom: 2rem !important;
             h1 { 
                 font-size: 1.6rem !important;
             }
             p {
-                font-size: .9rem;
+                font-size: .9rem !important;
             }
         }
     }
@@ -50,6 +51,14 @@ export const Container = styled.main`
             color: var(--light-cyan);
             font-weight: 400;
             text-align: center;
+
+            span {
+                color: #fff;
+            }
+
+            a {
+                text-decoration: underline;
+            }
         }
     }
 
