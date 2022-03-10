@@ -10,6 +10,12 @@ export const Container = styled.header`
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    position: sticky;
+    top: 0;
+
+    @media only screen and (max-width: 480px) {
+        padding: 1rem .8rem;
+    }
 
     #logo {
         font-size: 2.2rem;
@@ -18,5 +24,9 @@ export const Container = styled.header`
     nav {
         display: flex;
         gap: 1rem;
+    }
+
+    .onScroll {
+        opacity: .7;
     }
 `

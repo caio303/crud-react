@@ -3,14 +3,25 @@ import styled from 'styled-components'
 export const Container = styled.main`
 
     @media only screen and (min-width: 781px) and (max-width: 1024px) {
-        margin: 2rem auto;
+        margin: 1.6rem auto;
         width: 70%;
     }
 
-    @media only screen and (max-width: 780px) {
-        margin: 2rem auto;
+    @media only screen and (min-width: 481px) and (max-width: 780px) {
+        margin: 2rem calc(auto - 1rem);
         width: 90%;
         padding: 1.4rem;
+    }
+
+    @media only screen and (max-width: 480px) {
+        margin: 2rem auto;
+        width: 90%;
+        padding: 1rem;
+        #form-header {
+            h1 { 
+                font-size: .6rem;
+            }
+        }
     }
 
     background-color: var(--dark-blue-light);
@@ -35,6 +46,7 @@ export const Container = styled.main`
         p {
             color: var(--light-cyan);
             font-weight: 400;
+            text-align: center;
         }
     }
 

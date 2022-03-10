@@ -14,22 +14,30 @@ export const GlobalStyles = createGlobalStyle`
         margin: 0;
         box-sizing: border-box;
         color: #fff;
+        max-width: 100vw;
     }
 
     html {
-        min-width: 100%;
-        min-height: 100%;
+        min-width: 100vw;
+        max-width: 100vw;
+        min-height: 100vh;
         font-family: 'Raleway', sans-serif;
+         
+        * {
+            max-width: 100vw;
+        }
     }
 
     body {
         min-width: 100vw;
+        max-width: 100vw;
         min-height: 100vh;
         background-color: var(--dark-blue);
     }
 
     a {
         text-decoration: none;
+
         &:visited {
             color: inherit;
         }

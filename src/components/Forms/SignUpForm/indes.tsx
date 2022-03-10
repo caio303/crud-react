@@ -36,7 +36,7 @@ export const SignUpForm = () => (
                         <div className="label">
                             CPF *
                         </div>
-                        <input type="number" name="cpf" maxLength={11} placeholder="Ex.: 12345678910"/>
+                        <input type="tel" name="cpf" maxLength={11} placeholder="Ex.: 12345678910"/>
                     </label>
                     <label>
                         <div className="label">
@@ -54,6 +54,7 @@ export const SignUpForm = () => (
                 </label>
 
                 <button type="submit">Enviar</button>
+                
             </form>
         </section>
     </Container>
