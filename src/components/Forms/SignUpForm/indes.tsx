@@ -43,7 +43,9 @@ export const SignUpForm = () => {
             senha: values.senha,
         }
 
-        
+        setUserCreated(true);
+
+        setTimeout(() => setUserCreated(false),4000)
 
     }
 
@@ -162,7 +164,7 @@ export const SignUpForm = () => {
 
                 </form>
             </section>
-            {userCreated && <div>USUARUO CRIADO</div>}
+            {userCreated && <div id="success-message">USUARUO CRIADO</div>}
         </Container>
     )
 } 
