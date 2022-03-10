@@ -18,8 +18,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     html {
-        min-width: 100vw;
-        max-width: 100vw;
+        width: calc(100vw - 1.1rem);
         min-height: 100vh;
         font-family: 'Raleway', sans-serif;
          
@@ -29,8 +28,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     body {
-        min-width: 100vw;
-        max-width: 100vw;
+        width: calc(100vw - 1.1rem);
         min-height: 100vh;
         background-color: var(--dark-blue);
     }
