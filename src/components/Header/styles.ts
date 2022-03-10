@@ -12,6 +12,7 @@ export const Container = styled.header`
     gap: 1.5rem;
     position: sticky;
     top: 0;
+    z-index: 3;
 
     @media only screen and (max-width: 480px) {
         padding: 1rem .8rem;

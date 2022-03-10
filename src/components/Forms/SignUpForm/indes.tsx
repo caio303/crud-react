@@ -1,10 +1,11 @@
 import { Container } from "../styles";
-//import { SignUpFieldsType } from "../../../types/SignUpFieldsType";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm} from 'react-hook-form'
 import { SignUpValidationType } from "../../../types/SignUpValidationType";
 import { dataNascRegExp } from "../../../utils/regexps/dataNascRegExp";
+import { SignUpFieldsType } from "../../../types/SignUpFieldsType";
+import { crudApi } from "../../../services/crudAPi";
 import { useState } from "react";
 
 const createUserFormSchema = yup.object().shape({
@@ -19,6 +20,8 @@ const createUserFormSchema = yup.object().shape({
 export const SignUpForm = () => {
 
     const [userCreated,setUserCreated] = useState<boolean>(false);
+    const [dataNascRegexpError,setDataNascRegexpError] = useState<boolean>(false);
+    const [userAlredyExistsError,setUserAlredyExistsError] = useState<boolean>(false);
 
     const { 
         register, 
@@ -29,12 +32,13 @@ export const SignUpForm = () => {
     })
 
     const handleSignUpUser: SubmitHandler<SignUpValidationType> = async (values) => {
-        if(!values.dataNasc.match(dataNascRegExp)) return
+        if(!values.dataNasc.match(dataNascRegExp)) return setDataNascRegexpError(true);
+        setDataNascRegexpError(false);
 
-        /* const nome = values.sobrenome? values.nome + " " + values.sobrenome : values.nome;
-        const descricao = values.descricao?? ""; */
+        const nome = values.sobrenome? values.nome + " " + values.sobrenome : values.nome;
+        const descricao = values.descricao?? "";
 
-        /* const newUser: SignUpFieldsType = {
+        const newUser: SignUpFieldsType = {
             nome: nome,
             cpf: values.cpf,
             email: values.email,
@@ -42,11 +46,28 @@ export const SignUpForm = () => {
             dataNasc: values.dataNasc,
             senha: values.senha,
         }
- */
-        setUserCreated(true);
 
-        setTimeout(() => setUserCreated(false),4000)
-
+        try {
+            await crudApi.post("usuario/cadastro",
+                {...newUser}
+            ).then(() => {
+                //Displays success message when user is created successfully
+                setUserCreated(true);
+                setTimeout(() => setUserCreated(false),1500)
+            })
+        }catch(error) {
+            // Displays error message when user alredy exists (by cpf)
+            // @ts-ignore
+            if(error.response.status === 409) {
+                setUserAlredyExistsError(true)
+                setTimeout(() => setUserAlredyExistsError(false),1500)
+                return console.warn("User already exists");
+                // @ts-ignore
+            }else {
+                console.warn(error)
+            }
+        }
+        
     }
 
     return (
@@ -133,6 +154,7 @@ export const SignUpForm = () => {
                                 placeholder="Ex.: 04/05/1995"
                                 />
                             {errors.dataNasc && <span>{errors.dataNasc.message}</span>}
+                            {dataNascRegexpError && <span>"Insira uma data válida"</span>}
                         </label>
                     </div>
 
@@ -160,11 +182,10 @@ export const SignUpForm = () => {
                             />
                     </label>
 
-                    <button type="submit">Enviar</button>
+                    <button type="submit">{userAlredyExistsError ? 'Usuário já cadastrado' : (userCreated? 'Usuário Criado!' : 'Enviar')}</button>
 
                 </form>
             </section>
-            {userCreated && <div id="success-message">USUARUO CRIADO</div>}
         </Container>
     )
 } 
