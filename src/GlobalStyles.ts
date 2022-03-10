@@ -31,6 +31,13 @@ export const GlobalStyles = createGlobalStyle`
         width: calc(100vw - 1.1rem);
         min-height: 100vh;
         background-color: var(--dark-blue);
+        
+    }
+
+    @media only screen and (max-width: 1490px) {
+        body, html {
+            width: 100vw;
+        }
     }
 
     a {
