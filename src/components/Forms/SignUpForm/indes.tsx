@@ -1,5 +1,5 @@
 import { Container } from "../styles";
-import { SignUpFieldsType } from "../../../types/SignUpFieldsType";
+//import { SignUpFieldsType } from "../../../types/SignUpFieldsType";
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm} from 'react-hook-form'
@@ -31,10 +31,10 @@ export const SignUpForm = () => {
     const handleSignUpUser: SubmitHandler<SignUpValidationType> = async (values) => {
         if(!values.dataNasc.match(dataNascRegExp)) return
 
-        const nome = values.sobrenome? values.nome + " " + values.sobrenome : values.nome;
-        const descricao = values.descricao?? "";
+        /* const nome = values.sobrenome? values.nome + " " + values.sobrenome : values.nome;
+        const descricao = values.descricao?? ""; */
 
-        const newUser: SignUpFieldsType = {
+        /* const newUser: SignUpFieldsType = {
             nome: nome,
             cpf: values.cpf,
             email: values.email,
@@ -42,7 +42,7 @@ export const SignUpForm = () => {
             dataNasc: values.dataNasc,
             senha: values.senha,
         }
-
+ */
         setUserCreated(true);
 
         setTimeout(() => setUserCreated(false),4000)
